@@ -1,20 +1,20 @@
-[build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
-
+# Add basic project information and dependencies
 [project]
-name = "comp0034-activities"
-version = "2025.01"
-requires-python = ">=3.12"
+name = "fleet-mix-app"  # Name must not contain spaces.
+dynamic = ["version"]
 dependencies = [
     "flask",
     "pandas",
-    "streamlit",
-    "dash",
-    "dash-ag-grid",
-    "dash-bootstrap-components",
-    "openpyxl",
-    "fastapi",
-    "uvicorn",
-    "pylint"
+    "plotly",
+    "pytest",
+    "pytest-cov",
+    "pytest-playwright",
 ]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

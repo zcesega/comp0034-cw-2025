@@ -1,0 +1,5 @@
+commit_url: # Repository commit url, format will be https://github.com/ucl-comp0035/your-repo-name/commit/long-commit-hash
+app_dir: src/app.py  
+app_type: flask 
+port: 
+run_command: flask --app app:app run

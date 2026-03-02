@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/fleet_mix_app/__init__.py
+src/fleet_mix_app/analytics.py
+src/fleet_mix_app/data_access.py
+src/fleet_mix_app/routes.py
+src/fleet_mix_app.egg-info/PKG-INFO
+src/fleet_mix_app.egg-info/SOURCES.txt
+src/fleet_mix_app.egg-info/dependency_links.txt
+src/fleet_mix_app.egg-info/requires.txt
+src/fleet_mix_app.egg-info/top_level.txt
+tests/test_analytics.py
+tests/test_basic_app.py
+tests/test_browser.py
+tests/test_routes.py

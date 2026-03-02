@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Fleet mix comparison{% endblock %}
+{% block content %}
+  <div class="row mb-3">
+    <div class="col-lg-5">
+      <h1 class="h4">Fleet mix comparison</h1>
+      <p>
+        Select two years to compare how the distribution of cars across CC bands has changed.
+      </p>
+      <form method="post" class="row g-3">
+        <div class="col-md-6">
+          <label for="year1" class="form-label">Year 1</label>
+          <select id="year1" name="year1" class="form-select" required>
+            <option value="">Choose...</option>
+            {% for y in years %}
+              <option value="{{ y }}"
+                {% if result and result.year1 == y %}selected{% endif %}>
+                {{ y }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="year2" class="form-label">Year 2</label>
+          <select id="year2" name="year2" class="form-select" required>
+            <option value="">Choose...</option>
+            {% for y in years %}
+              <option value="{{ y }}"
+                {% if result and result.year2 == y %}selected{% endif %}>
+                {{ y }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            Compare
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if result %}
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title h5">Totals</h2>
+            <p class="mb-1">
+              <strong>{{ result.year1 }}</strong> total: {{ result.total_year1 }}
+            </p>
+            <p class="mb-0">
+              <strong>{{ result.year2 }}</strong> total: {{ result.total_year2 }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title h5">Mix Shift Score</h2>
+            <p class="display-6">
+              {{ result.mix_shift_score | round(1) }}
+            </p>
+            <p class="mb-0">
+              The Mix Shift Score is the sum of absolute percentage point changes
+              across all CC bands.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title h5">Top contributing CC bands</h2>
+            <ul class="mb-0">
+              {% for band in result.top_bands %}
+                <li>
+                  <strong>{{ band.cc_rating }}</strong>:
+                  {{ band.pp_change | round(1) }} percentage points
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h2 class="h5">CC band breakdown</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm align-middle">
+            <thead>
+              <tr>
+                <th>CC band</th>
+                <th>{{ result.year1 }} count</th>
+                <th>{{ result.year1 }} %</th>
+                <th>{{ result.year2 }} count</th>
+                <th>{{ result.year2 }} %</th>
+                <th>Percentage point change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in result.rows %}
+                <tr>
+                  <td>{{ row.cc_rating }}</td>
+                  <td>{{ row.number_year1 }}</td>
+                  <td>{{ row.pct_year1 | round(1) }}</td>
+                  <td>{{ row.number_year2 }}</td>
+                  <td>{{ row.pct_year2 | round(1) }}</td>
+                  <td>{{ row.pp_change | round(1) }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
